@@ -1,0 +1,223 @@
+<%inherit file="base.html"/>
+<h3>${self.pagename()}</h3>
+
+<%!
+	import pymongo
+	
+	db = pymongo.Connection('localhost', 27017).cc
+	
+
+%>
+
+
+
+<%def name="items()">
+	%for n in range(count):
+
+		ctx.beginPath();
+		ctx.globalAlpha = 0.5;
+		ctx.arc(${x[n]},${y[n]},${objects_size[n]},0,2*Math.PI);
+		ctx.strokeStyle = '${color[n]}';
+		ctx.stroke();
+		ctx.fillStyle = '${color[n]}';
+		ctx.fillText('${name[n]}', ${lable_x[n]},${lable_y[n]});
+
+	%endfor
+
+</%def>	 
+
+<!-- Lets declare some page variables.  -->
+
+
+<center>
+<canvas id="myCanvas" width="1000" height="800" style="background-color: #000000"; class="fltrt">
+Your browser does not support the HTML5 canvas tag. Please open in Google Chrome.
+
+<script>
+
+	var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+	ctx.translate(c.width /2, c.height /2);
+	
+	// border around the edge
+	
+	ctx.moveTo(470,-389);
+	ctx.lineTo(-470,-389);
+	ctx.lineTo(-489, -370);
+	ctx.lineTo(-489, 239);
+	ctx.moveTo(489, 239);
+	ctx.lineTo(489, -370);
+	ctx.lineTo(470, -389);
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();
+
+	
+	// Top shape
+	ctx.beginPath();
+	ctx.moveTo(-150,-400);
+	ctx.lineTo(-125, -375);
+	ctx.lineTo(125,-375);
+	ctx.lineTo(150,-400);
+	ctx.lineTo(-150,-400);
+	
+	ctx.fillStyle = '#081F26';
+	ctx.fill();
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();	
+	
+	// current x,y location
+	ctx.beginPath();
+	ctx.textAlign = 'center';
+	ctx.font= '14pt Terminal';
+	ctx.fillStyle = '1A6680';
+	ctx.fillText('X : ${ship['x']} || Y : ${ship['y']}', 0 , -382);
+	
+	// Bottom Left Panel
+	ctx.beginPath();
+	ctx.moveTo(-500, 250);
+	ctx.lineTo(-475, 225);
+	ctx.lineTo(-175, 225);
+	ctx.lineTo(-150, 250);
+	ctx.lineTo(-150, 400);
+	ctx.lineTo(-175, 400);
+	ctx.lineTo(-475, 400);
+	ctx.lineTo(-500, 375);
+	ctx.lineTo(-500, 250);
+	ctx.moveTo(-150,400);
+	ctx.lineTo(150, 400);
+	ctx.moveTo(-150, 250);
+	ctx.lineTo(150, 250);
+	
+	// Bottom Right Panel
+	ctx.moveTo(500, 250);
+	ctx.lineTo(475, 225);
+	ctx.lineTo(175, 225);
+	ctx.lineTo(150, 250);
+	ctx.lineTo(150, 400);
+	ctx.lineTo(175, 400);
+	ctx.lineTo(475, 400);
+	ctx.lineTo(500, 375);
+	ctx.lineTo(500, 250);
+	
+
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();
+	var cent_x = 0;
+	var cent_y = -65;
+	
+	ctx.globalAlpha = 0.5;
+	ctx.beginPath();
+	ctx.arc(cent_x,cent_y,300,0,2*Math.PI);
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();	
+	
+	// Radar Cross Hairs
+	ctx.globalAlpha = 0.5;
+	ctx.beginPath();
+	ctx.arc(cent_x,cent_y,1,0,2*Math.PI);
+	ctx.fillStyle = '#1A6680';
+	ctx.fill();
+	ctx.globalAlpha = .45;
+	ctx.moveTo(cent_x-350,cent_y);
+	ctx.lineTo(cent_x+350,cent_y);
+	ctx.moveTo(cent_x,cent_y-310);
+	ctx.lineTo(cent_x,cent_y+310);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();
+	
+	// Markers
+	ctx.beginPath();
+	ctx.globalAlpha = 1;
+	ctx.moveTo(cent_x - 300, cent_y - 10);
+	ctx.lineTo(cent_x - 300, cent_y + 10);
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();
+	ctx.font= '10pt Terminal';
+	ctx.fillStyle = '#1A6680';
+	ctx.fillText('-300', cent_x - 325,cent_y);
+
+	
+	
+	
+	ctx.beginPath();
+	ctx.globalAlpha = 1;
+	ctx.moveTo(cent_x + 300, cent_y - 10);
+	ctx.lineTo(cent_x + 300, cent_y + 10);
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();
+	ctx.font= '10pt Terminal';
+	ctx.fillStyle = '#1A6680';
+	ctx.fillText('300', cent_x + 305,cent_y);
+
+
+
+	
+	// Warp Drive
+
+	ctx.font= '10pt Terminal';
+	ctx.fillStyle = '#1A6680';
+	ctx.fillText('Warp Drive: ', cent_x+205,cent_y+325);
+	ctx.closePath();
+	
+	
+	ctx.beginPath();
+	ctx.rect( cent_x+240,cent_y+315, 200, ${warp_drive[0]}/10);
+	ctx.fillStyle = '${warp_drive[1]}';
+	ctx.fill();
+	ctx.closePath();
+	
+	
+	// Engine
+
+	ctx.font= '10pt Terminal';
+	ctx.fillStyle = '#1A6680';
+	ctx.fillText('Engine: ', cent_x+205,cent_y+355);
+	ctx.closePath();
+	
+	
+	ctx.beginPath();
+	ctx.rect( cent_x+240,cent_y+345, 200, ${engine[0]}/10);
+	ctx.fillStyle = '${engine[1]}';
+	ctx.fill();
+	ctx.closePath();
+
+	// Reactor
+
+	ctx.font= '10pt Terminal';
+	ctx.fillStyle = '#1A6680';
+	ctx.fillText('Reactor: ', cent_x+205,cent_y+385);
+	ctx.closePath();
+	
+	
+	ctx.beginPath();
+	ctx.rect( cent_x+240,cent_y+375, 200, ${reactor[0]}/10);
+	ctx.fillStyle = '${reactor[1]}';
+	ctx.fill();
+	ctx.closePath();
+	
+	
+	${items()}
+	
+	  
+	  
+</script>
+
+
+
+</canvas></center>
+<form action="" method="POST">
+    <center><p>
+	<label for="x">X</label><input name="x" id="x" type="text" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	<label for="y">Y</label><input name="y" id="y" type="text" STYLE="background-color: #081F26; color: #1A6680; border: none;"></p>
+    <p><input name="Warp" type="submit" value="Warp" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	</p></center>
+</form>
+
+<%def name="pagename()">
+
+<p>Command Center ${now}</p>
+
+</%def>
+

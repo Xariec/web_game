@@ -1,0 +1,48 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<h1>${self.pagename()}</h1>
+
+
+<%!
+	import pymongo
+	
+	db = pymongo.Connection('localhost', 27017).cc
+
+
+%>
+
+<%def name="gates()">
+	<%
+	lists = db.gate.find({}).sort(u'x_origin', 1)	
+	%>
+	%for x in lists:
+		 <tr><td>${x['player']} &nbsp;&nbsp;&nbsp; </td> <td> ${x['x_origin']},${x['y_origin']}</td></tr>
+	%endfor
+</%def>	
+
+
+
+<h3>Logged in as ${user['username']}</h3><br />
+<div>
+
+<form action="" method="POST">
+    <p><label for="player">player</label><input name="player" id="player" type="text"></p>
+    <p><label for="x">X</label><input name="x" id="x" type="text"></p>
+    <p><label for="y">y</label><input name="y" id="y" type="text"></p>  
+    <p><input name="register" type="submit" value="Register"></p>
+</form>
+</div>
+<div>
+Known Warp Gates: <br /><br />
+<table>
+${gates()}
+</table>
+</div>
+
+
+</body>
+</html>
+
+<%def name="pagename()">
+All Warp Gates
+</%def>

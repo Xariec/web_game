@@ -1,0 +1,50 @@
+<%inherit file="base.html"/>
+
+<%def name="list_fleets()">
+	%for a in range(list):
+		<option value = "${list_fleet[a]}">${list_fleet[a]}</option>
+	%endfor
+</%def>
+
+
+<%def name="fleet()">
+	%for x in range(count):
+		<tr>
+			<td width="100px">${name[x]}</td>
+			<td width="100px">${type[x]}</td>
+			<td width="100px">${health[x]}</td>
+			<td width="100px"><form action="" method="POST"><select name="fleet" value="fleet">	${list_fleets()}</select></td>
+			<td width="100px"><input name="submit" type="submit" value="update">
+		</tr>
+	
+	%endfor
+
+</%def>	
+
+
+
+<p>
+<form action="" method="POST">
+<select name="list_fleets" value="list_fleets">
+	${list_fleets()}
+</select>
+<input name="submit" type="submit" value="select"></p>
+</form>
+<br />
+<table>
+<tr height="75px">
+	<td width="150px"> Name: </td>
+	<td width="100px"> Type: </td>
+	<td width="75px">Health</td>
+	<td widht="100px">Fleet</td>
+</tr>
+${fleet()}
+
+</table>
+
+
+
+
+
+
+

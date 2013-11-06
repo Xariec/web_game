@@ -1,0 +1,53 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<h3>${self.pagename()}</h3>
+
+
+<%!
+	import pymongo
+	
+	db = pymongo.Connection('localhost', 27017).cc
+
+
+%>
+<%def name="gates()">
+	<%
+	lists = db.gate.find({}).sort(u'player', 1)	
+	%>
+
+	%for x in lists:
+		<option name="${x['player']}" value="${x['x_origin']},${x['y_origin']}" id="${x['player']}"> ${x['player']} </option>
+	
+	%endfor
+
+</%def>	
+
+<%def name="warps()">
+	<%
+	warp = db.warps.find({'player' : query}).sort(u'time', -1)
+	%>
+	%for x in warp:
+		${x['player']}&nbsp;&nbsp;${x['x_origin']},${x['y_origin']}&nbsp;&nbsp;&nbsp;${x['x_dest']},${x['y_dest']}&nbsp;&nbsp;&nbsp; ${x['time']}<br />
+	%endfor
+</%def>	
+
+
+
+
+<%def name="pagename()">
+All Warps
+</%def>
+<div>
+<br /><br />
+<form action="" Method="POST">
+<select name="list" value="test">
+
+${gates()}
+</select>
+<p><input name="submit" type="submit" value="select"></p>
+</form><br />
+Player &nbsp;&nbsp; X,Y Origin &nbsp;&nbsp;&nbsp; X,Y Destination &nbsp;&nbsp;&nbsp; Time
+<br /><br />
+${warps()}
+</div>
+

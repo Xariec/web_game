@@ -1,0 +1,29 @@
+<%inherit file="base.html"/>
+<h1>${self.pagename()}</h1>
+
+
+<%!
+	import pymongo
+	
+	db = pymongo.Connection('localhost', 27017).cc
+	
+
+%>
+
+<br />
+<h3>Welcome:</h3>
+<p>Welcome aboard ${user['username']}, Allow me to introduce you to your new ship. The ${ship['name']}! </p>
+<p>I know she isn't the greatest, but she will definitely get you around the solar systems and she can hold up pretty well if it comes to a fight. </p>
+<p>Now, I know what your thinking; she's a dump; and well... to be honest; she has seen better days. But I'll have you know everything inside has been replaced. And I know your not to happy about it not being the latest and greatest, but hey! We did what we could. She has the best that we had on hand. So Unfortunately you'll just have to deal with it.</p>
+
+<p>Now remember, she is currently orbiting planet "Whatchamacallit" located at ${ship['x']} , ${ship['y']}.</p>
+<p> Don't forget this cord. If you run into any problems, keep in mind we have a top notch defense system here. Nothing will be able to chase you into here.</p><p> Also, our economy is growing strong, so if you saved up some extra cash, feel free to come here from time to time to spend it. Maybe on some upgrades :-).</p>
+
+<p> Now, if you don't mind. I have some work to do. The Panel on the left should get you started.</p>
+
+
+
+
+<%def name="pagename()">
+
+</%def>

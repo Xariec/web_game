@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body bgcolor="#000000">
+<br />
+	<div>
+
+<center>
+<canvas id="myCanvas" width="1000" height="600" style="border:1px solid #000000; background-color: #000000";>
+Your browser does not support the HTML5 canvas tag. Please open in Google Chrome.
+
+<script>
+
+	var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+
+	// create radial gradient
+
+	
+	// Top Panel
+	ctx.beginPath();
+	ctx.moveTo(400,0);
+	ctx.lineTo(425,25);
+	ctx.lineTo(575,25);
+	ctx.lineTo(600,0);
+	ctx.lineTo(400,0);
+	ctx.closePath();
+
+	ctx.fillStyle = '#081F26';
+	ctx.fill();
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();
+	// End Top Panel
+	
+	// Border on edge
+	ctx.beginPath();
+	ctx.moveTo(411,11);
+	ctx.lineTo(30,11);
+	ctx.lineTo(11,30);
+	ctx.lineTo(11,489);
+	ctx.moveTo(989,489);
+
+	ctx.lineTo(989,30);
+	ctx.lineTo(970,11);
+	ctx.lineTo(588,11);
+	
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();
+	
+	// End Border on edge
+	
+	
+	// Bottom Panel
+	ctx.beginPath();
+	ctx.moveTo(0,500);
+	ctx.lineTo(25,475);
+	ctx.lineTo(325,475);
+	ctx.lineTo(350,500);
+	ctx.lineTo(650,500);
+	ctx.lineTo(675,475);
+	ctx.lineTo(975,475);
+	ctx.lineTo(1000,500);
+	ctx.lineTo(1000,600);
+	ctx.lineTo(0,600);
+	ctx.lineTo(0,500);
+	ctx.closePath();
+	ctx.moveTo(350,600);
+	ctx.lineTo(350,500);	
+	ctx.moveTo(650,600);
+	ctx.lineTo(650,500);
+	
+	
+
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = '#1A6680';
+	ctx.stroke();
+	
+	// fuel
+	
+	var grd = ctx.createLinearGradient(700,500,700,580);
+	grd.addColorStop(0, '#081F26');
+	grd.addColorStop(1, 'Green');
+	
+	ctx.fillStyle = grd;
+	ctx.fillRect(700,500,10,80);	
+	
+	var grd = ctx.createLinearGradient(720,500,700,580);
+	grd.addColorStop(0, '#081F26');
+	grd.addColorStop(0.8, '#081F26');
+	grd.addColorStop(1, 'red');
+	
+	ctx.fillStyle = grd;
+	ctx.fillRect(720,500,10,80);
+	
+	// A ship
+	
+	ctx.beginPath();
+	ctx.moveTo(100,100);
+	// (x,y) of the starting point.
+	ctx.quadraticCurveTo(150,75, 300, 100);
+	// (x,y) of the control Point, (x,) of the end point
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = 'green';
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.moveTo(100,100);
+	ctx.quadraticCurveTo(150,125, 300, 100);
+	// (x,y) of the control Point, (x,) of the end point
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = 'green';
+	ctx.stroke();
+	
+	
+	
+	
+	  
+	  
+</script>
+</body>
+</html>

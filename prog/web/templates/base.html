@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>${self.sitename()} | ${self.pagename()}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="/static/css/new.css">
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    </head>  
+    <!-- <body class="${self.bodyclass()}"> -->
+    <body class="twoColElsLt">
+        <div id="container">
+          <header>
+            <div class="inner">
+<!--               <a id="site-title" href="/">${self.sitename()}</a> -->
+              <!-- User nav -->
+              <!-- <nav id="user-nav"> -->
+<!--               <nav id="sidebar1">
+                <ul>
+                      % if user is not UNDEFINED and user:
+			  <br>
+                          <li><a href="/logout/">Logout</a></li>
+                      % else:
+			  <br>
+                          <li><a href="/login/">Login</a></li>
+                          <li><a href="/register/">Register</a></li>
+                      % endif
+                </ul>
+              </nav> -->
+              <!-- Main nav -->
+              <!-- <nav id="main-nav"> -->
+              <nav id="sidebar1">
+				<br />
+				<br />
+                <ul>
+				  % if user is not UNDEFINDED and user:
+				  <li><a href="/command/">Command Center</a></li>
+				  <li><a href="/personnel/">Personnel</a></li>
+				  <li><a href="/fleet/">fleet</a></li>
+				  <li><a href="/logout/">Logout</a></li>
+				  
+				  % else:
+				  <li><a href="/login/">Login</a></li>
+                  <li><a href="/register/">Register</a></li>
+				  % endif
+                </ul>
+              </nav>
+            </div>
+          </header>
+        <section>
+          <div class="inner">
+            ${next.body()}
+          </div>
+        </section>
+      </div>
+    </body>
+</html>
+
+      
+<%def name="pagename()">Base</%def>
+
+<%def name="bodyclass()">${self.pagename()}</%def>
+
+<%def name="sitename()">A work in progess</%def>
+
+<%def name="errormsg(field)">
+    % if errors is not UNDEFINED and errors and  field in errors:
+        <p class="form_field_error">${errors[field]}</p>
+    % endif
+</%def>
+<%def name="userlink(username)">
+<a href="/users/${username}/" title="${username}">${username}</a>
+</%def>

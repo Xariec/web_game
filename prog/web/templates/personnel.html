@@ -1,0 +1,40 @@
+<%inherit file="base.html"/>
+
+
+<%!
+	import pymongo
+	
+	db = pymongo.Connection('localhost', 27017).cc
+	
+
+%>
+
+<%def name="gates()">
+	%for x in range(count):
+		<tr>
+			<td width-"100px">${name[x]}</td>
+			<td width-"100px">${gender[x]}</td>
+			<td width-"100px">${title[x]}</td>
+			<td width-"100px">${position[x]}</td>
+			<td width-"100px">${location[x]}</td>
+			<td width-"100px">${skill[x]}</td>
+			<td width-"100px">${health[x]}</td>
+		<tr>
+	%endfor
+
+</%def>	
+
+<table>
+<tr height="75px">
+	<td width="100px"> Name: </td>
+	<td width="75px"> Gender: </td>
+	<td width="150px">Title:</td>
+	<td width="100px">Position</td>
+	<td width="100px">Location</td>
+	<td width="75px">Skill</td>
+	<td width="75px">Health</td>
+</tr>
+${gates()}
+
+</table>
+

@@ -1,0 +1,50 @@
+<%inherit file="base.html"/>
+<h1>${self.pagename()}</h1>
+
+
+<%!
+	import pymongo
+	
+	db = pymongo.Connection('localhost', 27017).cc
+
+
+%>
+
+<%def name="warps()" cached="False">
+	<%
+	warp = db.warp_log.find({})	
+	%>
+	%for x in warp:
+		ctx.save();ctx.beginPath();ctx.arc(${int(x['x_origin'])*2},${int(x['y_origin'])*2},2,0,2*Math.PI); ctx.fillStyle = "#FF0000";ctx.fill();ctx.stroke();ctx.restore();
+		ctx.save();ctx.beginPath();ctx.arc(${int(x['x_dest'])*2},${int(x['y_dest'])*2},2,0,2*Math.PI); ctx.fillStyle = "#00FF00";ctx.fill();ctx.stroke();ctx.restore();
+		ctx.save();ctx.beginPath();ctx.globalAlpha=0.1; ctx.moveTo(${int(x['x_origin'])*2},${int(x['y_origin'])*2});ctx.lineTo(${int(x['x_dest'])*2},${int(x['y_dest'])*2});ctx.stroke();ctx.restore();
+	%endfor
+</%def>	
+
+<%def name="gates()">
+	<%
+	lists = db.warp_gates.find({}).sort(u'x_origin', 1)	
+	%>
+	%for x in lists:
+		 <tr><td>${x['player']} &nbsp;&nbsp;&nbsp; </td> <td> ${x['x_origin']},${x['y_origin']}</td></tr>
+	%endfor
+</%def>	
+
+
+
+<h3>Logged in as ${user['username']}</h3><br />
+
+<div>
+Known Warp Gates: <br /><br />
+<table>
+${gates()}
+</table>
+</div>
+
+
+</body>
+</html>
+
+<%def name="pagename()">
+All Warp Gates
+</%def>

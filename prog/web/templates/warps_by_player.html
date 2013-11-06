@@ -1,0 +1,31 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<h3>${self.pagename()}</h3>
+
+
+<%!
+	import pymongo
+	
+	db = pymongo.Connection('localhost', 27017).cc
+
+
+%>
+=
+
+<%def name="warps()" cached="False">
+	<%
+	warp = db.warp_log.find({}).sort(u'x_origin', 1)
+	%>
+	%for x in warp:
+		${x['x_origin']},${x['y_origin']}&nbsp;&nbsp;&nbsp;${x['x_dest']},${x['y_dest']}<br />
+	%endfor
+</%def>	
+
+
+<%def name="pagename()">
+
+
+All Warps
+</%def>
+${name}
+<br /><br />

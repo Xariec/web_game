@@ -1,0 +1,80 @@
+<%inherit file="base.html"/>
+<h1>${self.pagename()}</h1>
+
+
+<%!
+	import pymongo
+	
+	db = pymongo.Connection('localhost', 27017).cc
+	
+	
+	warp = db.warp_log.find({})
+	time = db.warp_log.find().sort(u'time', -1).limit(1)
+
+%>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+
+
+<h3>Welcome ${user['username']}</h3><br />
+
+This is a view of all warps logged up till ${last()}.<br />
+
+<%def name="last()">
+	%for x in time:
+		${x['time']} <br />
+	%endfor
+</%def>
+
+
+
+<div>
+
+<center>
+<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #000000;">
+Your browser does not support the HTML5 canvas tag. Please open in Google Chrome.
+</canvas>
+
+<script>
+
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+<%def name="warps()">
+	%for x in warp:
+		ctx.save();ctx.beginPath();ctx.arc(${int(x['x_origin'])*2},${int(x['y_origin'])*2},2,0,2*Math.PI); ctx.fillStyle = "#FF0000";ctx.fill();ctx.stroke();ctx.restore();
+		ctx.save();ctx.beginPath();ctx.arc(${int(x['x_dest'])*2},${int(x['y_dest'])*2},2,0,2*Math.PI); ctx.fillStyle = "#00FF00";ctx.fill();ctx.stroke();ctx.restore();
+		ctx.save();ctx.beginPath();ctx.globalAlpha=0.1; ctx.moveTo(${int(x['x_origin'])*2},${int(x['y_origin'])*2});ctx.lineTo(${int(x['x_dest'])*2},${int(x['y_dest'])*2});ctx.stroke();ctx.restore();
+	%endfor
+</%def>	
+
+${warps()}
+
+</script>
+</div>
+
+<div>
+
+<%def name="list()">
+	%for x in warp:
+		Inbound warp detected at ${x['x_dest']},${x['y_dest']}  from ${x['x_dest']},${x['y_dest']}
+	%endfor
+</%def>	
+
+
+</div>
+
+
+</body>
+</html>
+
+<%def name="pagename()">
+All Warp Gates
+</%def>
