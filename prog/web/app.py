@@ -123,7 +123,8 @@ class command(object):
 	@users.login_required
 	def GET(self):
 		now = datetime.datetime.now()
-		lvl = 100000000
+		lvl = 1500000000
+		scale = lvl/150
 		u_id = users.get_user()['_id']
 		p_id= db.player_items.find_one({'u_id' : u_id, 'name' : "GCBS-371"})
 		x = int(p_id['x'])
@@ -149,8 +150,8 @@ class command(object):
 				# print new_x, new_y
 				# db.universe.update({'_id' : a['_id']}, {"$set": {'x_pos' : int(new_x), 'y_pos' : int(new_y)}})
 				
-		# position = db.universe.find({"x_pos": {"$gte": x - lvl , "$lte": x + lvl},"y_pos": {"$gte": y - lvl, "$lte": y + lvl}})
-		position = db.universe.find().limit(1000)
+		position = db.universe.find({"x_pos": {"$gte": x - lvl , "$lte": x + lvl},"y_pos": {"$gte": y - lvl, "$lte": y + lvl}})
+		# position = db.universe.find().limit(1000)
 		objects_name = []
 		objects_type = []
 		objects_x = []
@@ -164,10 +165,10 @@ class command(object):
 			print x['name']
 			objects_name.append(x['name'])
 			objects_type.append(x['item'])
-			objects_x.append((x['x_pos']-int(p_id['x']))/lvl)
-			objects_y.append((x['y_pos']-int(p_id['y']))/lvl-65)
-			objects_lable_x.append((x['x_pos']-int(p_id['x']))/lvl+10)
-			objects_lable_y.append((x['y_pos']-int(p_id['y']))/lvl-70)
+			objects_x.append((x['x_pos']-int(p_id['x']))/scale)
+			objects_y.append((x['y_pos']-int(p_id['y']))/scale-65)
+			objects_lable_x.append((x['x_pos']-int(p_id['x']))/scale+10)
+			objects_lable_y.append((x['y_pos']-int(p_id['y']))/scale-70)
 			if x['item'] == "planet":
 				objects_size.append(1)
 				objects_color.append('green')
@@ -189,15 +190,34 @@ class command(object):
 		u_id = users.get_user()['_id']
 		p_id= db.player_items.find_one({'u_id' : u_id, 'name' : "GCBS-371"})	
 		post = web.input(_method='POST')
-		print post['x'], post['y']
-		new_position = db.universe.find({"x_pos": {"$gte": int(post['x']) - safe , "$lte": int(post['x']) + safe},"y_pos": {"$gte": int(post['y']) - safe, "$lte": int(post['y']) + safe}})
-		if new_position == None:
-			status = "Computer cant calculate Warp, please try a different destination"
+		movement = 100000000
+		if post['submit'] == "Warp":
+			print post['x'], post['y']
+			new_position = db.universe.find({"x_pos": {"$gte": int(post['x']) - safe , "$lte": int(post['x']) + safe},"y_pos": {"$gte": int(post['y']) - safe, "$lte": int(post['y']) + safe}})
+			if new_position == None:
+				status = "Computer cant calculate Warp, please try a different destination"
+				return web.seeother('/command/')
+			else:
+				db.player_items.update({'u_id' : u_id, 'name' : "GCBS-371"}, {"$set": {'x' : post['x'], 'y' : post['y']}})
+				return web.seeother('/command/')
+		elif post['submit'] == "Down":
+			y = int(p_id['y'])-movement
+			db.player_items.update({'u_id' : u_id, 'name' : "GCBS-371"}, {"$set": {'y' : y}})
 			return web.seeother('/command/')
-		else:
-			db.player_items.update({'u_id' : u_id, 'name' : "GCBS-371"}, {"$set": {'x' : post['x'], 'y' : post['y']}})
+		elif post['submit'] == "Up":
+			y = int(p_id['y'])+movement
+			db.player_items.update({'u_id' : u_id, 'name' : "GCBS-371"}, {"$set": {'y' : y}})
 			return web.seeother('/command/')
-		
+		elif post['submit'] == "Left":
+			x = int(p_id['x'])-movement
+			db.player_items.update({'u_id' : u_id, 'name' : "GCBS-371"}, {"$set": {'x' : x}})
+			return web.seeother('/command/')
+		elif post['submit'] == "Right":
+			x = int(p_id['x'])+movement
+			db.player_items.update({'u_id' : u_id, 'name' : "GCBS-371"}, {"$set": {'x' : x}})
+			return web.seeother('/command/')
+				
+
 class personnel(object):
 	@users.login_required
 	def GET(self):

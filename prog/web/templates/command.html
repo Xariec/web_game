@@ -15,10 +15,11 @@
 	%for n in range(count):
 
 		ctx.beginPath();
-		ctx.globalAlpha = 0.5;
+		ctx.globalAlpha = 0.75;
 		ctx.arc(${x[n]},${y[n]},${objects_size[n]},0,2*Math.PI);
 		ctx.strokeStyle = '${color[n]}';
 		ctx.stroke();
+		ctx.font= '10pt Terminal';
 		ctx.fillStyle = '${color[n]}';
 		ctx.fillText('${name[n]}', ${lable_x[n]},${lable_y[n]});
 
@@ -69,7 +70,7 @@ Your browser does not support the HTML5 canvas tag. Please open in Google Chrome
 	// current x,y location
 	ctx.beginPath();
 	ctx.textAlign = 'center';
-	ctx.font= '14pt Terminal';
+	ctx.font= '12pt Terminal';
 	ctx.fillStyle = '1A6680';
 	ctx.fillText('X : ${ship['x']} || Y : ${ship['y']}', 0 , -382);
 	
@@ -211,8 +212,19 @@ Your browser does not support the HTML5 canvas tag. Please open in Google Chrome
     <center><p>
 	<label for="x">X</label><input name="x" id="x" type="text" STYLE="background-color: #081F26; color: #1A6680; border: none;">
 	<label for="y">Y</label><input name="y" id="y" type="text" STYLE="background-color: #081F26; color: #1A6680; border: none;"></p>
-    <p><input name="Warp" type="submit" value="Warp" STYLE="background-color: #081F26; color: #1A6680; border: none;">
-	</p></center>
+    <p><input name="submit" type="submit" value="Warp" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	</p>
+	<p>
+		<input name="submit" type="submit" value="Left" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Up" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Down" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Right" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	</p>
+	
+	
+	
+	
+	</center>
 </form>
 
 <%def name="pagename()">
