@@ -15,6 +15,8 @@ import pprint
 import datetime
 import db_actions
 import random
+from bson.objectid import ObjectId
+
 
 web.config.debug = False
 
@@ -123,8 +125,9 @@ class command(object):
 	@users.login_required
 	def GET(self):
 		now = datetime.datetime.now()
-		lvl = 1500000000
-		scale = lvl/150
+		# lvl = 1500000000
+		lvl = 15000000000
+		scale = lvl/1500
 		u_id = users.get_user()['_id']
 		p_id= db.player_items.find_one({'u_id' : u_id, 'name' : "GCBS-371"})
 		x = int(p_id['x'])
@@ -165,8 +168,8 @@ class command(object):
 			print x['name']
 			objects_name.append(x['name'])
 			objects_type.append(x['item'])
-			objects_x.append((x['x_pos']-int(p_id['x']))/scale)
-			objects_y.append((x['y_pos']-int(p_id['y']))/scale-65)
+			objects_x.append((x['x_pos']-int(p_id['x']))/scale-500)
+			objects_y.append((x['y_pos']-int(p_id['y']))/scale-565)
 			objects_lable_x.append((x['x_pos']-int(p_id['x']))/scale+10)
 			objects_lable_y.append((x['y_pos']-int(p_id['y']))/scale-70)
 			if x['item'] == "planet":
@@ -251,7 +254,9 @@ class fleet(object):
 	@users.login_required
 	def GET(self):
 		u_id = users.get_user()['_id']
+		print u_id
 		fleet = db.player_items.find({'u_id' : u_id, 'item' : "Ship"})
+		ship_id = []
 		name = []
 		health = []
 		type = []
@@ -260,6 +265,7 @@ class fleet(object):
 		count = 0
 		list = 0
 		for x in fleet:
+			ship_id.append(x['_id'])
 			name.append(x['name'])
 			type.append(x['type'])
 			health.append(x['health'])
@@ -268,11 +274,25 @@ class fleet(object):
 				list_fleet.append(x['fleet'])
 				list +=1
 			count += 1
-		return render('fleet.html', name=name, type=type, health = health, count=count, list = list, list_fleet = list_fleet, ship_fleet = ship_fleet)
+		return render('fleet.html', name=name, type=type, health = health, count=count, list = list, list_fleet = list_fleet, ship_fleet = ship_fleet, ship_id = ship_id)
 
 	def POST(self):
 		post = web.input(_method='POST')
 		submit = post['submit']
+		if submit == "select":
+			print submit
+		elif submit == "update":
+			ship_id = post['id']
+			print ship_id
+			ship_id = ObjectId(ship_id)
+			fleet = post['fleet']
+			# fleet_update = db.player_items.find_one({'_id' : ship_id})
+			fleet_update = db.player_items.update({'_id' : ship_id}, {"$set" :{'fleet' : "Blah"}})
+			if fleet_update:
+				print fleet_update
+			else:
+				print "Didn't work.... sooo sorry!"
+				print fleet_update, ship_id
 		# fleet_selected = post['list_fleets']
 		# find_fleet = db.warps.find({'fleet' : fleet_selected})
 		# name = []
@@ -292,8 +312,8 @@ class fleet(object):
 
 		# update_fleet = post['fleet']
 		
-		print "submit :", submit
-		print "post :", post
+		# print "submit :", submit
+		# print "post :", post
 		# print "fleet selected :", fleet_selected
 		# print "update fleet :", update_fleet
 		

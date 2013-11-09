@@ -13,7 +13,10 @@
 			<td width="100px">${name[x]}</td>
 			<td width="100px">${type[x]}</td>
 			<td width="100px">${health[x]}</td>
-			<td width="100px"><form action="" method="POST"><select name="fleet" value="fleet">	${list_fleets()}</select></td>
+			<td width="100px"><form action="" method="POST"><input name ="id" type="hidden" value="${ship_id[x]}">
+								<select name="fleet" value="fleet">	
+									${list_fleets()}
+								</select></td>
 			<td width="100px"><input name="submit" type="submit" value="update">
 		</tr>
 	

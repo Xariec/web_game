@@ -3,6 +3,7 @@ import math
 import time
 import datetime
 import random
+from bson.objectid import ObjectId
 
 
 db = pymongo.Connection('localhost', 27017).game
@@ -17,16 +18,22 @@ seconds = minutes * 60 + now.second # Seconds, fairly accurate depiction of time
 
 
 
+id = "527976fc6f94c10ccc3aa488"
 
+print id
 
-star = db.universe.find({'item' : "star"}).limit(100)
-print "Item Name X-POS Y-POS System-Size"
-for a in star:
-	print a['item'], a['name'], a['x_pos'], a['y_pos'], a['system_size']
-	planet = db.universe.find({'p_id' : a['_id']})
-	for b in planet:
-		print b['item'], b['name'], b['x_pos'], b['y_pos']
-		
+test = db.player_items.find_one()['_id']
+
+print test
+print type(id)
+
+id = ObjectId(id)
+print type(id)
+
+print type(test)
+
+ship = db.player_items.find_one({'_id' : id})
+print ship
 
 		
 
