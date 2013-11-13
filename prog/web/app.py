@@ -168,8 +168,8 @@ class command(object):
 			print x['name']
 			objects_name.append(x['name'])
 			objects_type.append(x['item'])
-			objects_x.append((x['x_pos']-int(p_id['x']))/scale-500)
-			objects_y.append((x['y_pos']-int(p_id['y']))/scale-565)
+			objects_x.append((x['x_pos']-int(p_id['x']))/scale)
+			objects_y.append((x['y_pos']-int(p_id['y']))/scale-65)
 			objects_lable_x.append((x['x_pos']-int(p_id['x']))/scale+10)
 			objects_lable_y.append((x['y_pos']-int(p_id['y']))/scale-70)
 			if x['item'] == "planet":
