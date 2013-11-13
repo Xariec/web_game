@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>A work in progess | 
+
+
+</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="/static/css/new.css">
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    </head>  
+    <!-- <body class="
+
+
+"> -->
+    <body class="twoColElsLt">
+        <div id="container">
+          <header>
+            <div class="inner">
+<!--               <a id="site-title" href="/">A work in progess</a> -->
+              <!-- User nav -->
+              <!-- <nav id="user-nav"> -->
+<!--               <nav id="sidebar1">
+                <ul>
+			  <br>
+                          <li><a href="/logout/">Logout</a></li>
+                </ul>
+              </nav> -->
+              <!-- Main nav -->
+              <!-- <nav id="main-nav"> -->
+              <nav id="sidebar1">
+				<br />
+				<br />
+                <ul>
+				  <li><a href="/command/">Command Center</a></li>
+				  <li><a href="/personnel/">Personnel</a></li>
+				  <li><a href="/fleet/">fleet</a></li>
+				  <li><a href="/logout/">Logout</a></li>
+				  
+                </ul>
+              </nav>
+            </div>
+          </header>
+        <section>
+          <div class="fltrt">
+            
+<h3>
+
+
+</h3>
+
+
+	 
+
+<!-- Lets declare some page variables.  -->
+
+
+		
+		
+
+
+<script src="http://www.html5canvastutorials.com/libraries/kinetic-v4.7.3-beta.js"></script>
+<script defer="defer">
+  var stage = new Kinetic.Stage({
+	container: 'container',
+	width: 500,
+	height: 500
+  });
+
+  var layer = new Kinetic.Layer();
+
+  var circle = new Kinetic.Circle({
+	x: 50,
+	y: 50,
+	radius: 25,
+	fill: 'red'
+  });
+
+  // add the shape to the layer
+  layer.add(circle);
+
+  // add the layer to the stage
+  stage.add(layer);
+</script>
+
+<div id="container" class="fltrt"></div>
+
+		
+		
+		
+		
+<form action="" method="POST">
+    <center><p>
+	<label for="x">X</label><input name="x" id="x" type="text" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	<label for="y">Y</label><input name="y" id="y" type="text" STYLE="background-color: #081F26; color: #1A6680; border: none;"></p>
+    <p><input name="submit" type="submit" value="Warp" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	</p>
+	<p>
+		<input name="submit" type="submit" value="Left" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Up" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Down" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Right" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	</p>
+	
+	
+	
+	
+	</center>
+</form>
+<p>Command Center 2013-11-07 13:59:43.711000</p>
+
+
+
+
+          </div>
+        </section>
+      </div>
+    </body>
+</html>

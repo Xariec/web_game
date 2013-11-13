@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v4.7.3-beta.js"></script>
+    <script defer="defer">
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 1000,
+        height: 1000
+      });
+
+      var layer = new Kinetic.Layer();
+
+      var circle = new Kinetic.Circle({
+        x: 500,
+        y: 500,
+        radius: 70,
+        fill: 'red'
+      });
+
+      // add the shape to the layer
+      layer.add(circle);
+
+      // add the layer to the stage
+      stage.add(layer);
+    </script>
+  </body>
+</html>

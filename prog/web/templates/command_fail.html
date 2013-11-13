@@ -1,0 +1,81 @@
+<%inherit file="base.html"/>
+<h3>${self.pagename()}</h3>
+
+
+<%def name="items()">
+	%for n in range(1):
+		var circle =  new Kinetic.Circle({
+			x: ${x[n]},
+			y: ${y[n]},
+			id: ${name[n]},
+			radius: 3,
+			fill: green
+	});		
+
+
+	%endfor
+
+</%def>	 
+
+<!-- Lets declare some page variables.  -->
+
+
+		
+		
+
+
+<script src="http://www.html5canvastutorials.com/libraries/kinetic-v4.7.3-beta.js"></script>
+<script defer="defer">
+  var stage = new Kinetic.Stage({
+	container: 'container',
+	width: 500,
+	height: 500
+  });
+
+  var layer = new Kinetic.Layer();
+
+  var circle = new Kinetic.Circle({
+	x: 50,
+	y: 50,
+	radius: 25,
+	fill: 'red'
+  });
+
+  // add the shape to the layer
+  layer.add(circle);
+
+  // add the layer to the stage
+  stage.add(layer);
+</script>
+
+<div id="container" class="fltrt"></div>
+
+		
+		
+		
+		
+<form action="" method="POST">
+    <center><p>
+	<label for="x">X</label><input name="x" id="x" type="text" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	<label for="y">Y</label><input name="y" id="y" type="text" STYLE="background-color: #081F26; color: #1A6680; border: none;"></p>
+    <p><input name="submit" type="submit" value="Warp" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	</p>
+	<p>
+		<input name="submit" type="submit" value="Left" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Up" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Down" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+		<input name="submit" type="submit" value="Right" STYLE="background-color: #081F26; color: #1A6680; border: none;">
+	</p>
+	
+	
+	
+	
+	</center>
+</form>
+<p>Command Center ${now}</p>
+
+<%def name="pagename()">
+
+
+</%def>
+
