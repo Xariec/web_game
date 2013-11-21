@@ -16,6 +16,7 @@ import datetime
 import db_actions
 import random
 from bson.objectid import ObjectId
+import web_actions
 
 
 web.config.debug = False
@@ -33,6 +34,7 @@ urls = (
 	'/command/','command',
 	'/personnel/','personnel',
 	'/fleet/','fleet',
+	'/operations/', 'Operations',
 	)
   
 app = web.application(urls, globals())
@@ -135,24 +137,6 @@ class command(object):
 		warp_drive = db_actions.display_health("warp_drive", p_id['_id'])
 		engine = db_actions.display_health("engine", p_id['_id'])
 		reactor = db_actions.display_health("reactor", p_id['_id'])
-		# for a in db.universe.find({"x_pos": {"$gte": int(p_id['x']) - lvl , "$lte": int(p_id['x']) + lvl},"y_pos": {"$gte": int(p_id['y']) - lvl, "$lte": int(p_id['y']) + lvl}}):
-			# if a['item'] == "planet":
-				# print a['name']
-				# # t = seconds - a['created'] #subtract current seconds from seconds of the moment it was created
-				# # t = seconds - a['created']
-				# t = random.randrange(13546985622,63546985622)
-				# print t
-				# op = a['op'] # orbital period
-				# r = a['distance'] * 100000000
-				# # Note, add in accordance to the star, as that is the center in this case.
-				# star = db.universe.find_one({'_id' : a['p_id']})
-				# new_x = round(r*math.sin(math.fmod(t,op)/op*p))/100000000
-				# new_y = round(r*math.cos(math.fmod(t,op)/op*p))/100000000
-				# new_x = new_x + star['x_pos']
-				# new_y = new_y + star['y_pos']
-				# print new_x, new_y
-				# db.universe.update({'_id' : a['_id']}, {"$set": {'x_pos' : int(new_x), 'y_pos' : int(new_y)}})
-				
 		position = db.universe.find({"x_pos": {"$gte": x - lvl , "$lte": x + lvl},"y_pos": {"$gte": y - lvl, "$lte": y + lvl}})
 		# position = db.universe.find().limit(1000)
 		objects_name = []
@@ -225,31 +209,36 @@ class personnel(object):
 	@users.login_required
 	def GET(self):
 		u_id = users.get_user()['_id']
-		personnel = db.player_items.find({'u_id' : u_id, 'item' : "personnel"})
-		
-		name = []
-		title = []
-		skill = []
-		health = []
-		gender = []
-		position = []
-		location = []
-		count = 0
-		for x in personnel:
-			name.append(x['name'])
-			title.append(x['title'])
-			skill.append(x['skill'])
-			health.append(x['health'])
-			gender.append(x['gender'])
-			position.append(x['type'])
-			location.append(x['location'])
-			count += 1
-		
-		return render('personnel.html', name=name, position=position, location=location, count=count, title = title, skill = skill, health = health, gender = gender)
+		people = web_actions.Population()
+		list = people.getAllPersonnel(u_id)[0]
+		button = people.getAllPersonnel(u_id)[1]
+		return render('all_personnel.html', list = list, button = button)
 
 		
+	def POST(self):
+		u_id = users.get_user()['_id']
+		post = web.input(_method='POST')
+		try:
+			button = post['button']
+		except:
+			print post
+		if button:
+			people = web_actions.Population()
+			single = people.getOnePersonnel(button, u_id)
+			button = people.getAllPersonnel(u_id)[1]
+			print single
+			return render('personnel.html', button = button, single = single)
+		
 
-
+		
+class Operations(object):
+	@users.login_required
+	def GET(self):
+		return render('operations.html')
+		
+		
+		
+		
 class fleet(object):
 	@users.login_required
 	def GET(self):
@@ -293,74 +282,7 @@ class fleet(object):
 			else:
 				print "Didn't work.... sooo sorry!"
 				print fleet_update, ship_id
-		# fleet_selected = post['list_fleets']
-		# find_fleet = db.warps.find({'fleet' : fleet_selected})
-		# name = []
-		# health = []
-		# type = []
-		# list_fleet = []
-		# count = 0
-		# for x in find_fleet:
-			# name.append(x['name'])
-			# type.append(x['type'])
-			# health.append(x['health'])
-			# if (x['fleet'] in list_fleet) == False:
-				# list_fleet.append(x['fleet'])
-				# list +=1
-			# count += 1
-			
 
-		# update_fleet = post['fleet']
-		
-		# print "submit :", submit
-		# print "post :", post
-		# print "fleet selected :", fleet_selected
-		# print "update fleet :", update_fleet
-		
-		# list = 0	
-		# list_x = []
-		# list_y = []
-		# gates = db.warps.find().sort(u'x_origin', -1)
-		# for b in gates:
-			# if ((b['x_origin'] in list_x) and (b['y_origin'] in list_y)) == False:
-				# list_x.append(b['x_origin'])
-				# list_y.append(b['y_origin'])
-				# list +=1
-				
-		# return render('warps.html', x_origin = x, y_origin = y, x_dest = warped_x_dest, y_dest = warped_y_dest, count = count_warped, list_x = list_x, list_y = list_y, list = list)		
-
-		
-# class fleet(object):
-	# @users.login_required
-	# def GET(self):
-		# u_id = users.get_user()['_id']
-		# fleet = db.player_items.find({'u_id' : u_id, 'item' : "Ship"})
-		# name = []
-		# health = []
-		# lvl = []
-		# type = []
-		# count = 0
-		# for x in fleet:
-			# name.append(x['name'])
-			# type.append(x['type'])
-			# health.append(x['health'])
-			# lvl.append(x['lvl'])
-			# count += 1
-		
-		# return render('fleet.html', name=name, type=type, health = health, count=count, lvl = lvl)
-
-
-	# def POST(self):
-		# post = web.input(_method='POST')
-		# name = post['player']
-		# x = post['x']
-		# y = post['y']
-		# search = db.gate.find_one({'x_origin' : int(x), 'y_origin' : int(y)})
-		# if search is not None:
-			# db.gate.update({'_id' : search['_id']}, {"$set": {'player' : name}})
-			# return render('warp_gates.html')
-		# else:
-			# return search, name, x, y
 
 class warps(object):
 	@users.login_required

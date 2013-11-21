@@ -59,6 +59,7 @@ def personnel(u_id, p_id, type, lvl, location): # This will hold the rules for a
 	luck = random.uniform(.125, .75)
 	skill = 0
 	assigned = 0
+	age = random.randint(20, 60)
 	# personnel = {1: "Physician", 2 : "Engineer", 3 : "Scientist", 4 : "Mechanic", 5 : "Instructor", '6' : "Pilot"}
 	# This will be a way to import a personnel and use this later for adding more as needed, but needs more work and the rest of the other parts need to come together before I know how I'm going to call the right information.
 	# The type of personnel will be included when calling this function, the following uses the lvl associated with type to determine what their title is.
@@ -80,7 +81,7 @@ def personnel(u_id, p_id, type, lvl, location): # This will hold the rules for a
 		location = random.choice(location)
 	else:
 		location = location
-	personnel_id = db.player_items.insert({'name' : names()[1], 'item' : item, 'type' : type, 'title' : title[lvl], 'gender' : names()[0], 'indiscretion' : indiscretion, 'health' : health, 'u_id' : u_id, 'p_id' : p_id, 'skill' : skill,'timestamp' : now, 'created' : seconds, 'location' : location, 'luck' : luck, 'assigned' : assigned})
+	personnel_id = db.player_items.insert({'name' : names()[1], 'item' : item, 'type' : type, 'title' : title[lvl], 'gender' : names()[0], 'indiscretion' : indiscretion, 'health' : health, 'u_id' : u_id, 'p_id' : p_id, 'skill' : skill,'timestamp' : now, 'created' : seconds, 'location' : location, 'luck' : luck, 'assigned' : assigned, 'age' : age})
 	if type == "Pilot":
 		assign_pilots = db.player_items.update({'u_id' : u_id, 'pilot' : "Unassigned", 'type' : "Fighter"}, {"$set" : { 'pilot' : personnel_id}})
 	

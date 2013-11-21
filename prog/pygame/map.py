@@ -11,7 +11,6 @@ p_id= db.player_items.find_one({'u_id' : u_id, 'name' : "GCBS-371"})
 #	Pygame values
 pygame.init()
 size = width, height, = 1280,720
-color = (0,0,255)
 screen = pygame.display.set_mode(size)
 x_tf = 500
 y_tf = height/2

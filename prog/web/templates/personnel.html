@@ -1,40 +1,40 @@
 <%inherit file="base.html"/>
 
-
 <%!
-	import pymongo
-	
-	db = pymongo.Connection('localhost', 27017).cc
-	
-
+	p_info = ["Name", "Rank", "Gender", "Location", "Assignment", "Age"]
 %>
 
-<%def name="gates()">
-	%for x in range(count):
-		<tr>
-			<td width-"100px">${name[x]}</td>
-			<td width-"100px">${gender[x]}</td>
-			<td width-"100px">${title[x]}</td>
-			<td width-"100px">${position[x]}</td>
-			<td width-"100px">${location[x]}</td>
-			<td width-"100px">${skill[x]}</td>
-			<td width-"100px">${health[x]}</td>
-		<tr>
+<%def name="p_buttons()">
+	<form action="" method="POST">
+	%for a in range(len(button['type'])):
+		<button name="button" value="${button['type'][a]}" type="submit" STYLE="background-color: #081F26; color: #1A6680; border: none;">${button['type'][a]}</button>
 	%endfor
+	</form>
+</%def>
 
-</%def>	
+<%def name="showPersonnel()">
+		%for x in range(len(single)):
+			%for y in range(len(single[x])):
+				<tr>
+					<td width="100px">${p_info[y]}</td><td width="250px"> ${single[x][y]}<br /></td>
+				</tr>
+			%endfor
+		<tr><td>__________</td><td>__________</td></tr>
+		%endfor
+</%def>
 
+
+<br />
+<br />
+${p_buttons()}
+<br />
+<br />
 <table>
-<tr height="75px">
-	<td width="100px"> Name: </td>
-	<td width="75px"> Gender: </td>
-	<td width="150px">Title:</td>
-	<td width="100px">Position</td>
-	<td width="100px">Location</td>
-	<td width="75px">Skill</td>
-	<td width="75px">Health</td>
-</tr>
-${gates()}
+${showPersonnel()}
 
 </table>
+
+
+
+
 
