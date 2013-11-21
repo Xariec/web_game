@@ -1,0 +1,49 @@
+<%inherit file="base.html"/>
+
+<%!
+	p_info = ["Name", "Rank", "Gender", "Location", "Assignment"]
+%>
+
+<%def name="p_buttons()">
+	<form action="" method="POST">
+	%for a in range(len(button['type'])):
+		<button name="button" value="${button['type'][a]}" type="submit" STYLE="background-color: #081F26; color: #1A6680; border: none;">${button['type'][a]}</button>
+	%endfor
+	</form>
+</%def>
+
+<%def name="showPersonnel()">
+	%for a in range(len(button['type'])):
+		<%
+			test = button['type'][a]
+		%>
+		%for x in range(len(list[test])):
+			%for y in range(5):
+				<tr>
+					<td width="100px">${p_info[y]}</td><td width="250px"> ${list[test][x][y]}<br /></td>
+				</tr>
+			%endfor
+			<tr><td>__________</td><td>__________</td></tr>
+		%endfor
+	%endfor
+</%def>
+
+
+<br />
+<br />
+${p_buttons()}
+<br />
+<br />
+All Personnel:
+<br />
+_______________
+<br />
+<table>
+${showPersonnel()}
+
+</table>
+
+
+
+
+

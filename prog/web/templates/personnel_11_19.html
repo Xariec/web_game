@@ -1,0 +1,65 @@
+<%inherit file="base.html"/>
+
+<%!
+	list_info = ["physician", "pilot"]
+	types = [('pilot'), ('physician')]
+	
+	pilot_info = ["Name", "Rank", "Gender", "Location", "Assignment"]
+	physician_info = ["Name", "Rank", "Gender", "Location", "Assignment"]
+	engineer_info = ["Name", "Rank", "Gender", "Location", "Assignment"]
+	
+	
+%>
+
+
+<script>
+$(document).ready(function(){
+  $("form").submit(function(){
+    alert("Submitted");
+  });
+});
+</script>
+
+
+<%def name="selection()">
+	<form action="" method="POST">
+		<select name="Personnel" value="personnel">
+			%for x in range(len(types)):
+				<option>${types[x]}</option>
+			%endfor
+		</select>
+		<input name="submit" type="submit" value="submit">
+	</form>
+</%def>
+
+
+
+<%def name="pilot()">
+	%for a in range(len(types)):
+		%for x in range(len(list[types[a]])):
+			%for y in range(5):
+				<tr>
+					<td width="100px">${pilot_info[y]}</td><td> ${list['pilot'][x][y]}<br /></td>
+				</tr>
+			%endfor
+			<tr><td>__________</td><td>__________</td></tr>
+		%endfor
+	%endfor
+</%def>
+
+
+<br />
+<br />
+${selection()}
+<br />
+<br />
+<table>
+<tr><td> PILOTS:</td><td></td></tr>
+${pilot()}
+
+</table>
+
+
+
+
+
