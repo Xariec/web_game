@@ -345,6 +345,9 @@ def player(u_id):
 
 
 
+	
+	
+
 
 def test(username):
 	password = "password"

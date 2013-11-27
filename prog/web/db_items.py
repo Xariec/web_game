@@ -9,6 +9,7 @@ import random
 db = pymongo.Connection('localhost', 27017).game
 
 item_categories = ['engines', 'weapons', 'communication', 'warp drives', 'reactors', 'surveillance', 'artillery']
+list_items_levels = {'engine' : 5, 'reactor' : 6, 'warpDrive' : 5}
 
 
 class DbItems(object):
@@ -23,6 +24,9 @@ class DbItems(object):
 		self.seconds = self.minutes * 60 + self.now.second
 		self.timestamp = datetime.datetime.now()
 		self.created = self.seconds
+		self.engine_levels = 5
+		self.reactor_levels = 6
+		self.warpdrive_levels = 5
 
 	def engine(self, u_id, p_id, lvl):
 		self.name = {1: "Electrostatic Ion Thruster", 2 : "Xenon Hall Thruster", 3 : "Helicon Double Layer Thruster", 4 : "Magnetoplasmadynamic Thruster", 5 : "Variable Magnetoplasma Rocket"}
@@ -74,10 +78,20 @@ class DbItems(object):
 		
 		return self.warp_drive_id
 	
+	def listItems(self, item, lvl):
+		for key,value in list_items_levels.iteritems():
+			print key, value
+			test = key.object()
+			print test
+			print type(test)
+
+			
+		
 	
 	
-	
-	
+if __name__ == '__main__':
+	C = DbItems()
+	items = C.listItems("test", 1)
 	
 	
 	

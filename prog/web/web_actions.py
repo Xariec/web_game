@@ -23,12 +23,8 @@ seconds = minutes * 60 + now.second # Seconds, fairly accurate depiction of time
 # u_id = db.users.find_one({'username' : "test"})['_id']
 
 class Population(object):
-
-
 	def getAllPersonnel(self, u_id):
 		self.personnel = db.player_items.find({'u_id' : u_id, 'item' : "personnel"})
-		
-		
 		self.type = []
 		self.physician = []
 		self.pilot = []
@@ -38,7 +34,6 @@ class Population(object):
 		self.mechanic = []
 		self.military = []
 		self.personnell = []
-		
 		for x in self.personnel:
 			if x['type'] not in self.type:
 				self.type.append(x['type'])
@@ -72,7 +67,9 @@ class Population(object):
 		
 		
 		
-		
+class Assignments(object):
+	
+	def 
 		
 
 		
